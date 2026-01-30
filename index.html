@@ -3,31 +3,949 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator Sederhana</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Portofolio | Wildan Fajri E.P - Pelajar SMK</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23000000" fill-opacity="0.1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,192C672,181,768,139,864,138.7C960,139,1056,181,1152,176C1248,171,1344,117,1392,90.7L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            opacity: 0.1;
+        }
+        
+        .profile-section {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .profile-img-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .profile-img-container:hover {
+            transform: scale(1.05);
+        }
+        
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: var(--transition);
+        }
+        
+        .profile-img-container:hover .profile-img {
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .camera-icon {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: var(--accent);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 3px solid white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+        
+        .camera-icon:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+        
+        .upload-text {
+            font-size: 0.9rem;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .contact-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: var(--transition);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .contact-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
+            border-color: white;
+        }
+        
+        /* Konten Utama */
+        .main-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 5px solid var(--secondary);
+        }
+        
+        .card:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+        }
+        
+        .card-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            color: var(--primary);
+            font-size: 1.5rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .card-title i {
+            margin-right: 12px;
+            color: var(--secondary);
+        }
+        
+        .info-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .info-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            min-width: 150px;
+            color: #555;
+        }
+        
+        .info-value {
+            flex-grow: 1;
+            color: #333;
+        }
+        
+        .highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        .tech-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .tech-icon {
+            background: var(--light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+        }
+        
+        .tech-icon i {
+            color: var(--secondary);
+        }
+        
+        .roadmap {
+            margin-top: 20px;
+        }
+        
+        .roadmap-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            position: relative;
+        }
+        
+        .roadmap-item::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: var(--secondary);
+            border-radius: 50%;
+        }
+        
+        .roadmap-item.completed::before {
+            background: #2ecc71;
+        }
+        
+        .roadmap-item.current::before {
+            background: var(--accent);
+            width: 12px;
+            height: 12px;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+        }
+        
+        /* Modal untuk Upload Foto */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            animation: modalFade 0.3s ease;
+        }
+        
+        @keyframes modalFade {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .upload-area {
+            border: 3px dashed #ddd;
+            border-radius: 15px;
+            padding: 40px 20px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .upload-area:hover, .upload-area.dragover {
+            border-color: var(--secondary);
+            background: rgba(52, 152, 219, 0.05);
+        }
+        
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .upload-area p {
+            margin-bottom: 10px;
+            color: #666;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .preview-container {
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .preview-img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 10px;
+            margin: 0 auto;
+            display: block;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #d0d0d0;
+            transform: translateY(-3px);
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-accent:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .motivation {
+            font-style: italic;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            color: #ddd;
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+        
+        /* Responsif */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .tagline {
+                font-size: 1.1rem;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-item {
+                flex-direction: column;
+            }
+            
+            .info-label {
+                margin-bottom: 5px;
+            }
+            
+            .hero {
+                border-radius: 0;
+                padding: 40px 0;
+            }
+            
+            .profile-img-container {
+                width: 170px;
+                height: 170px;
+            }
+        }
+        
+        /* Animasi loading */
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-    <div class="calculator">
-        <input type="text" id="result" disabled>
-        <div class="buttons">
-            <button onclick="clearResult()">C</button>
-            <button onclick="appendToResult('7')">7</button>
-            <button onclick="appendToResult('8')">8</button>
-            <button onclick="appendToResult('9')">9</button>
-            <button onclick="appendToResult('/')">/</button>
-            <button onclick="appendToResult('4')">4</button>
-            <button onclick="appendToResult('5')">5</button>
-            <button onclick="appendToResult('6')">6</button>
-            <button onclick="appendToResult('*')">*</button>
-            <button onclick="appendToResult('1')">1</button>
-            <button onclick="appendToResult('2')">2</button>
-            <button onclick="appendToResult('3')">3</button>
-            <button onclick="appendToResult('-')">-</button>
-            <button onclick="appendToResult('0')">0</button>
-            <button onclick="calculateResult()">=</button>
-            <button onclick="appendToResult('+')">+</button>
+    <!-- Modal Upload Foto -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <h2><i class="fas fa-camera"></i> Upload Foto Profil</h2>
+            
+            <div class="upload-area" id="dropArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Drag & drop foto Anda di sini</p>
+                <p>atau</p>
+                <button class="btn btn-primary" id="browseBtn">Pilih File</button>
+                <input type="file" id="fileInput" class="file-input" accept="image/*">
+                <p class="upload-text">Format: JPG, PNG, GIF (Maks. 5MB)</p>
+            </div>
+            
+            <div class="preview-container" id="previewContainer">
+                <h3>Pratinjau Foto:</h3>
+                <img id="previewImg" class="preview-img" alt="Pratinjau Foto">
+            </div>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Mengupload foto...</p>
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" id="cancelBtn">Batal</button>
+                <button class="btn btn-accent" id="saveBtn" disabled>Simpan Foto</button>
+            </div>
         </div>
     </div>
-    <script src="script.js"></script>
+    
+    <!-- Header / Hero -->
+    <header class="hero">
+        <div class="container">
+            <div class="profile-section">
+                <div class="profile-img-container" id="profileImgContainer">
+                    <img id="profileImage" class="profile-img" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Foto Profil Wildan Fajri">
+                    <div class="camera-icon" id="cameraIcon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                </div>
+                <p class="upload-text">Klik ikon kamera untuk mengganti foto</p>
+                
+                <h1>Wildan Fajri E.P</h1>
+                <p class="tagline">Pelajar SMK yang bersemangat belajar teknologi dari dasar hingga mahir</p>
+                
+                <div class="contact-links">
+                    <a href="tel:087816172369" class="contact-link" title="Telepon">
+                        <i class="fas fa-phone"></i>
+                    </a>
+                    <a href="https://wa.me/6287816172369" class="contact-link" title="WhatsApp" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="mailto:wildanfajri@example.com" class="contact-link" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Konten Utama -->
+    <main class="container">
+        <div class="main-content">
+            <!-- Data Pribadi -->
+            <section class="card">
+                <h2 class="card-title"><i class="fas fa-user"></i> Data Pribadi</h2>
+                <div class="info-item">
+                    <div class="info-label">Nama Lengkap</div>
+                    <div class="info-value">Wildan Fajri E.P</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Alamat</div>
+                    <div class="info-value">Sukoharjo, Jalan Bondronoyo 08/11</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Kontak</div>
+                    <div class="info-value">0878-1617-2369</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Status</div>
+                    <div class="info-value">Pelajar SMK</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Semangat</div>
+                    <div class="info-value"><span class="highlight">"Belajar komputer dari nol sampai expert!"</span></div>
+                </div>
+            </section>
+            
+            <!-- Data Sekolah -->
+            <section class="card">
+                <h2 class="card-title"><i class="fas fa-school"></i> Data Sekolah</h2>
+                <div class="info-item">
+                    <div class="info-label">Sekolah</div>
+                    <div class="info-value">SMK Muhammadiyah 03 Surakarta</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Kelas</div>
+                    <div class="info-value">10 (Sepuluh)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Wali Kelas</div>
+                    <div class="info-value">Ibu Dewi</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Jurusan</div>
+                    <div class="info-value">Teknik Komputer dan Jaringan (TKJ)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Fokus Belajar</div>
+                    <div class="info-value">Pemrograman, Jaringan Komputer, Hardware</div>
+                </div>
+            </section>
+            
+            <!-- Minat & Hobi -->
+            <section class="card">
+                <h2 class="card-title"><i class="fas fa-laptop-code"></i> Minat & Hobi</h2>
+                <div class="info-item">
+                    <div class="info-label">Minat Utama</div>
+                    <div class="info-value">Belajar komputer dari pemula sampai mahir (suhu)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Hobi</div>
+                    <div class="info-value">Belajar hal-hal dasar teknologi</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Teknologi yang Dipelajari</div>
+                    <div class="info-value">
+                        <div class="tech-icons">
+                            <span class="tech-icon"><i class="fab fa-html5"></i> TERMUXspan>
+                            <span class="tech-icon"><i class="fab fa-css3-alt"></i> KALI LINUX</span>
+                            <span class="tech-icon"><i class="fab fa-js"></i>  DEBIA</span>
+                            <span class="tech-icon"><i class="fas fa-network-wired"></i> Jaringan</span>
+                            <span class="tech-icon"><i class="fas fa-tools"></i> Hardware</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Target & Rencana -->
+            <section class="card">
+                <h2 class="card-title"><i class="fas fa-bullseye"></i> Target & Rencana</h2>
+                <div class="info-item">
+                    <div class="info-label">Target Jangka Pendek</div>
+                    <div class="info-value">Menguasai dasar-dasar pemrograman dan jaringan komputer</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Target Jangka Panjang</div>
+                    <div class="info-value">Menjadi tukang servis komputer yang handal</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Impian</div>
+                    <div class="info-value">Memiliki usaha servis komputer sendiri (owner servis)</div>
+                </div>
+                
+                <h3 style="margin-top: 25px; color: var(--primary);">Roadmap Belajar</h3>
+                <div class="roadmap">
+                    <div class="roadmap-item completed">
+                        <i class="fas fa-check-circle" style="color: #2ecc71; margin-right: 10px;"></i>
+                        Memulai belajar dasar komputer
+                    </div>
+                    <div class="roadmap-item current">
+                        <i class="fas fa-spinner" style="color: var(--accent); margin-right: 10px;"></i>
+                        Belajar HTML, CSS, JavaScript
+                    </div>
+                    <div class="roadmap-item">
+                        <i class="far fa-circle" style="color: #bbb; margin-right: 10px;"></i>
+                        Memahami hardware & troubleshooting
+                    </div>
+                    <div class="roadmap-item">
+                        <i class="far fa-circle" style="color: #bbb; margin-right: 10px;"></i>
+                        Praktik servis komputer & laptop
+                    </div>
+                    <div class="roadmap-item">
+                        <i class="far fa-circle" style="color: #bbb; margin-right: 10px;"></i>
+                        Membuka usaha servis sendiri
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Komitmen Belajar -->
+            <section class="card">
+                <h2 class="card-title"><i class="fas fa-fire"></i> Komitmen Belajar</h2>
+                <div class="info-item">
+                    <div class="info-label">Pendekatan</div>
+                    <div class="info-value">Belajar step by step dari yang paling dasar</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Filosofi</div>
+                    <div class="info-value">"Setiap ahli komputer pasti pernah menjadi pemula"</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Sumber Belajar</div>
+                    <div class="info-value">Online courses, buku, tutorial YouTube, praktik langsung</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Motivasi</div>
+                    <div class="info-value">Ingin menjadi mandiri dengan memiliki skill servis komputer</div>
+                </div>
+            </section>
+            
+            <!-- Proyek yang Dipelajari -->
+            <section class="card">
+                <h2 class="card-title"><i class="fas fa-project-diagram"></i> Yang Sedang Dipelajari</h2>
+                <div class="info-item">
+                    <div class="info-label">KALI LINUX</div>
+                    <div class="info-value">
+                        <div style="width: 100%; background: #eee; border-radius: 5px; margin-top: 5px;">
+                            <div style="width: 10%; background: var(--secondary); height: 10px; border-radius: 5px;"></div>
+                        </div>
+                        <div style="text-align: right; font-size: 0.9rem; margin-top: 5px;">% dikuasai</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">DEBIAN nmap </div>
+                    <div class="info-value">
+                        <div style="width: 100%; background: #eee; border-radius: 5px; margin-top: 5px;">
+                            <div style="width: 7%; background: var(--secondary); height: 10px; border-radius: 5px;"></div>
+                        </div>
+                        <div style="text-align: right; font-size: 0.9rem; margin-top: 5px;">7% dikuasai</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Troubleshooting Hardware</div>
+                    <div class="info-value">
+                        <div style="width: 100%; background: #eee; border-radius: 5px; margin-top: 5px;">
+                            <div style="width: 70%; background: var(--secondary); height: 10px; border-radius: 5px;"></div>
+                        </div>
+                        <div style="text-align: right; font-size: 0.9rem; margin-top: 5px;">70% dikuasai</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h3>Terus Belajar, Terus Berkembang!</h3>
+                <p class="motivation">"Perjalanan seribu mil dimulai dengan satu langkah. Hari ini saya mulai dari dasar, besok saya akan menjadi ahli."</p>
+                <p>Portofolio ini dibuat dengan HTML5, CSS3, dan JavaScript murni</p>
+                <p class="copyright">© 2023 Wildan Fajri E.P. | Pelajar SMK Muhammadiyah 03 Surakarta</p>
+                <button class="btn btn-accent" style="margin-top: 20px;" onclick="showMotivation()">
+                    <i class="fas fa-brain"></i> Lihat Motivasi Hari Ini
+                </button>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Elemen DOM
+        const profileImgContainer = document.getElementById('profileImgContainer');
+        const cameraIcon = document.getElementById('cameraIcon');
+        const profileImage = document.getElementById('profileImage');
+        const uploadModal = document.getElementById('uploadModal');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const browseBtn = document.getElementById('browseBtn');
+        const fileInput = document.getElementById('fileInput');
+        const dropArea = document.getElementById('dropArea');
+        const previewContainer = document.getElementById('previewContainer');
+        const previewImg = document.getElementById('previewImg');
+        const loading = document.getElementById('loading');
+        
+        let selectedFile = null;
+        
+        // Buka modal saat klik ikon kamera
+        cameraIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            uploadModal.style.display = 'flex';
+        });
+        
+        // Buka modal saat klik container foto
+        profileImgContainer.addEventListener('click', () => {
+            uploadModal.style.display = 'flex';
+        });
+        
+        // Tutup modal saat klik cancel
+        cancelBtn.addEventListener('click', () => {
+            uploadModal.style.display = 'none';
+            resetUploadModal();
+        });
+        
+        // Tutup modal saat klik di luar modal
+        uploadModal.addEventListener('click', (e) => {
+            if (e.target === uploadModal) {
+                uploadModal.style.display = 'none';
+                resetUploadModal();
+            }
+        });
+        
+        // Pilih file via tombol browse
+        browseBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        // Handle file input change
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                selectedFile = e.target.files[0];
+                validateAndPreviewFile(selectedFile);
+            }
+        });
+        
+        // Drag & drop functionality
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.classList.add('dragover');
+        });
+        
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('dragover');
+        });
+        
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.classList.remove('dragover');
+            
+            if (e.dataTransfer.files.length > 0) {
+                selectedFile = e.dataTransfer.files[0];
+                validateAndPreviewFile(selectedFile);
+            }
+        });
+        
+        // Validasi dan preview file
+        function validateAndPreviewFile(file) {
+            // Validasi tipe file
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+            if (!validTypes.includes(file.type)) {
+                alert('Format file tidak didukung. Harap pilih file JPG, PNG, atau GIF.');
+                return;
+            }
+            
+            // Validasi ukuran file (maks 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Ukuran file terlalu besar. Maksimal 5MB.');
+                return;
+            }
+            
+            // Preview gambar
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImg.src = e.target.result;
+                previewContainer.style.display = 'block';
+                saveBtn.disabled = false;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        // Simpan foto
+        saveBtn.addEventListener('click', () => {
+            if (!selectedFile) return;
+            
+            // Tampilkan loading
+            loading.style.display = 'block';
+            saveBtn.disabled = true;
+            
+            // Simulasi proses upload (dalam kasus nyata, ini akan upload ke server)
+            setTimeout(() => {
+                // Update foto profil
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    profileImage.src = e.target.result;
+                    
+                    // Simpan ke localStorage agar tetap ada saat refresh
+                    localStorage.setItem('profileImage', e.target.result);
+                    
+                    // Sembunyikan loading
+                    loading.style.display = 'none';
+                    
+                    // Tutup modal dan reset
+                    uploadModal.style.display = 'none';
+                    resetUploadModal();
+                    
+                    // Tampilkan notifikasi sukses
+                    alert('Foto profil berhasil diupdate!');
+                };
+                reader.readAsDataURL(selectedFile);
+            }, 1500);
+        });
+        
+        // Reset modal upload
+        function resetUploadModal() {
+            selectedFile = null;
+            fileInput.value = '';
+            previewContainer.style.display = 'none';
+            previewImg.src = '';
+            saveBtn.disabled = true;
+            loading.style.display = 'none';
+            dropArea.classList.remove('dragover');
+        }
+        
+        // Cek apakah ada foto di localStorage saat halaman dimuat
+        window.addEventListener('load', () => {
+            const savedImage = localStorage.getItem('profileImage');
+            if (savedImage) {
+                profileImage.src = savedImage;
+            }
+        });
+        
+        // Fungsi tambahan untuk motivasi
+        function showMotivation() {
+            const motivations = [
+                "Jangan menyerah! Setiap ahli komputer pernah menjadi pemula.",
+                "Belajar sedikit setiap hari akan membawa hasil besar dalam setahun.",
+                "Kesalahan adalah bagian dari pembelajaran. Teruslah mencoba!",
+                "Skill servis komputer adalah investasi masa depan yang sangat berharga.",
+                "Fokus pada proses, hasil akan mengikuti dengan sendirinya."
+            ];
+            
+            const randomMotivation = motivations[Math.floor(Math.random() * motivations.length)];
+            alert("💡 Motivasi Hari Ini:\n\n" + randomMotivation);
+        }
+        
+        // Animasi saat scroll
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.card');
+            const scrollPosition = window.scrollY + window.innerHeight;
+            
+            cards.forEach(card => {
+                const cardPosition = card.offsetTop;
+                
+                if (scrollPosition > cardPosition + 100) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        
+        // Inisialisasi animasi kartu
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+            
+            // Trigger scroll event untuk animasi awal
+            setTimeout(() => {
+                window.dispatchEvent(new Event('scroll'));
+            }, 100);
+        });
+    </script>
 </body>
 </html>
